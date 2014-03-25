@@ -7,6 +7,10 @@ run_gsui_function_script( NAME ){
     source $NAME.sh
 }
 
+install_java(){
+    run_gsui_function_script install_java
+}
+
 install_mysql(){
     run_gsui_function_script install_mysql
 }
