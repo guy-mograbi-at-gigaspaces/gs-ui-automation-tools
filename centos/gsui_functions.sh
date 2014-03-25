@@ -2,6 +2,7 @@ export GSUI_FUNCTION_ROOT="https://raw.githubusercontent.com/guy-mograbi-at-giga
 
 
 run_gsui_function_script( ){
+
     NAME = $1
     wget --no-check-certificate "$GSUI_FUNCTION_ROOT/$NAME.sh" -O $NAME.sh
     chmod +x $NAME.sh
