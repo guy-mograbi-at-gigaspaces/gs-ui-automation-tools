@@ -1,4 +1,5 @@
 echo "installing java"
+# find wget urls at : https://ivan-site.com/2012/05/download-oracle-java-jre-jdk-using-a-script/
 
 DIST_FOLDER=/usr/lib/jvm/jdk1.6.0_33
 if [ -f $DIST_FOLDER ];then
@@ -12,7 +13,7 @@ cd "$(dirname "$0")"
 INSTALL_JAVA_DIR=/usr/lib/jvm
 mkdir -p $INSTALL_JAVA_DIR
 cd $INSTALL_JAVA_DIR
-wget -O jdk.bin --no-check-certificate --no-cookies --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2Ftechnetwork%2Fjava%2Fjavase%2Fdownloads%2Fjdk6-downloads-1637591.html;" http://download.oracle.com/otn-pub/java/jdk/6u33-b03/jdk-6u33-linux-x64.bin
+wget -O jdk.bin http://get.gsdev.info/java/1.6_45/java-1.6_45-linux-x64.bin
 chmod 755 jdk.bin
 echo "yes" | ./jdk.bin &>/dev/null
 export JAVA_HOME=$DIST_FOLDER
