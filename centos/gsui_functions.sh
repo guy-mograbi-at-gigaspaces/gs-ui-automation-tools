@@ -1,8 +1,7 @@
 
 run_gsui_function_script( ){
-
-    NAME = $1
-    if [ ! -f $NAME.sh ];then
+    NAME=$1
+    if [ ! -f $NAME.sh ]; then
         echo "missing file $NAME.sh"
         exit 1
     fi
