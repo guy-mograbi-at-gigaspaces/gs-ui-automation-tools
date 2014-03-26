@@ -47,6 +47,10 @@ install_initd_script(){
 
 }
 
+install_mongo(){
+    NAME=install_mongo run_gsui_function_script
+}
+
 install_java(){
     NAME=install_java run_gsui_function_script
 }
