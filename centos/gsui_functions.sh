@@ -25,6 +25,7 @@ check_exists(){
 
 # use this with SYSCONFIG_FILE=filename read_sysconfig. This function will add /etc/sysconfig to the path
 read_sysconfig(){
+    check_exists SYSCONFIG_FILE
     if [ ! -f /etc/sysconfig/$SYSCONFIG_FILE ]; then
         echo "sysconfig file does not exists"
         exit 1
@@ -32,6 +33,20 @@ read_sysconfig(){
         chmod +x /etc/sysconfig/$SYSCONFIG_FILE
         source /etc/sysconfig/$SYSCONFIG_FILE
     fi
+}
+
+
+# places a script under /etc/init.d. use with $SERVICE_NAME
+install_initd_script(){
+    check_exists SERVICE_NAME
+    check_exists SERVICE_FILE
+    echo "installing initd script"
+    INITD_LOCATION=/etc/init.d/$SERVICE_NAME
+
+    cp $SERVICE_FILE $INITD_LOCATION
+    chmod +x $INITD_LOCATION
+    echo "initd script installed"
+
 }
 
 install_java(){
