@@ -1,12 +1,8 @@
 
 run_gsui_function_script( ){
-    NAME=$1
-    if [ ! -f $NAME.sh ]; then
-        echo "missing file $NAME.sh"
-        exit 1
-    fi
-    chmod +x $NAME.sh
-    source $NAME.sh
+    check_exists NAME
+    chmod +x /opt/gsat/$NAME.sh
+    source /opt/gsat/$NAME.sh
 }
 
 # checks if a variable is defined otherwise prints error message and exists. check_exists DOMAIN
@@ -50,13 +46,13 @@ install_initd_script(){
 }
 
 install_java(){
-    run_gsui_function_script install_java
+    NAME=install_java run_gsui_function_script
 }
 
 install_mysql(){
-    run_gsui_function_script install_mysql
+    NAME=install_mysql run_gsui_function_script
 }
 
 install_nginx(){
-    run_gsui_function_script install_nginx
+    NAME=install_nginx run_gsui_function_script
 }
