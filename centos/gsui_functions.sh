@@ -26,6 +26,7 @@ read_sysconfig(){
         echo "sysconfig file does not exists"
         exit 1
     else
+
         chmod +x /etc/sysconfig/$SYSCONFIG_FILE
         source /etc/sysconfig/$SYSCONFIG_FILE
     fi
