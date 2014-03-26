@@ -17,6 +17,7 @@ tar -xvf /opt/gsat/gsat.tar -C /opt/gsat
 echo "loading gsat functions"
 dos2unix *.sh /opt/gsat/*.sh
 chmod +x *.sh /opt/gsat/*.sh
+source /opt/gsat/gsui_functions.sh
 
 
 
