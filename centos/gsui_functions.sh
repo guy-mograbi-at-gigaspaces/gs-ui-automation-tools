@@ -2,7 +2,7 @@
 run_gsui_function_script( ){
     check_exists NAME
     chmod +x /opt/gsat/$NAME.sh
-    source /opt/gsat/$NAME.sh
+    source /opt/gsat/$NAME.sh $*
 }
 
 # checks if a variable is defined otherwise prints error message and exists. check_exists DOMAIN
@@ -70,4 +70,8 @@ install_mysql(){
 
 install_nginx(){
     NAME=install_nginx run_gsui_function_script
+}
+
+migrate_db(){
+    NAME=migrate_db run_gsui_function_script $*
 }

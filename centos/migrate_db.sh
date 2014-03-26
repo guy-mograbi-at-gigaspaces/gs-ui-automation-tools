@@ -16,40 +16,49 @@ echo "upgrading to [ $1 ]"
 
 UPGRADE_TO=$1
 
-if [ "$UPGRADE_TO" = "create" ];then
+migrate_create(){
+    DB_STATUS=`mysqlshow "$DB" -u $DB_ADMIN -p$DB_ADMIN_PASSWORD > /dev/null 2>&1 || echo "missing"`
+    if [ "$DB_STATUS" = "missing" ];then
+        echo "creating DB"
+        `mysql -u $DB_USER -p$DB_PASSWORD  -e "create database $DB"`
+        `mysql -u $DB_USER -p$DB_PASSWORD $DB  < $BASEDIR/create.sql`
+    else
+        echo "DB already exists. skipping"
+    fi
 
-    `mysql -u $DB_USER -p$DB_PASSWORD  -e "create database $DB"`
-    `mysql -u $DB_USER -p$DB_PASSWORD $DB  < $BASEDIR/create.sql`
-    exit 0
-fi
+}
 
-if [ "$UPGRADE_TO" = "version" ];then
+migrate_get_version(){
     DB_VERSION=`mysql -u $DB_USER -p$DB_PASSWORD $DB -e "select version from patchlevel" --skip-column-names --raw `
     echo "current DB version is $DB_VERSION"
-    exit 0
-fi
+}
 
 
-if [ "$UPGRADE_TO" = "" ];then
-    echo "ERROR : missing argument version"
-    echo "usage db_migrate version"
-    exit 1
-fi
+migrate_error(){
+    if [ "$UPGRADE_TO" = "" ];then
+        echo "ERROR : missing argument version"
+        echo "usage db_migrate version"
+        exit 1
+    fi
+}
 
-if [ "$UPGRADE_TO" = "latest" ];then
+upgrade_to_latest(){
     echo "calculating latest version"
     UPGRADE_TO=`ls ${BASEDIR} -1 | grep -v create |  sed -e 's/\.[a-zA-Z]*$//' | sort -r -n | head -1`
     echo "latest version is $UPGRADE_TO"
-fi
 
-echo "upgrading to $UPGRADE_TO"
+    upgrade_to_version
+}
 
+
+upgrade_to_version(){
 DB_VERSION=`mysql -u $DB_USER -p$DB_PASSWORD $DB -e "select version from patchlevel" --skip-column-names --raw `
 echo "current DB version is $DB_VERSION"
 if [ $DB_VERSION -ge $UPGRADE_TO ]; then
         echo "DB version is bigger. will not run migrate scripts"
         exit 0
 else
+        echo "upgrading to $UPGRADE_TO"
         DB_VERSION=` expr $DB_VERSION + 1 `
         for i in `seq $DB_VERSION $UPGRADE_TO`
         do
@@ -70,6 +79,25 @@ else
                 fi
         done
 fi
+}
+
+
+case "$1" in
+  latest)
+    upgrade_to_latest
+    ;;
+  create)
+    migrate_create
+    ;;
+  version)
+    migrate_get_version
+    ;;
+  *)
+    migrate_error
+    upgrade_to_version
+
+esac
+
 
 echo "done migrating"
 
