@@ -7,21 +7,10 @@ echo "changing workdir"
 cd "$(dirname "$0")"
 echo "workdir is now `pwd`"
 
-if [ -z $DB_USER ] || [ -z $DB_PASSWORD ] || [ -z $DB ]; then
-    echo "DB_USER, DB_PASSWORD and DB are required"
-    exit 1
-else
-    echo "using $DB_USER/$DB_PASSWORD for upgrade on [ $DB ]"
-fi
-
-
-if [ -z $BASEDIR ]; then
-    echo "BASEDIR is required"
-    exit 1
-else
-    echo "BASEDIR is [ $BASEDIR ]"
-fi
-
+check_exists DB_USER
+check_exists DB_PASSWORD
+check_exists DB
+check_exists BASEDIR
 
 echo "upgrading to [ $1 ]"
 

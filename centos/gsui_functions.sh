@@ -9,6 +9,19 @@ run_gsui_function_script( ){
     source $NAME.sh
 }
 
+# checks if a variable is defined otherwise prints error message and exists. check_exists DOMAIN
+check_exists(){
+    TMP='eval echo \$$1'
+    VAR_VALUE=`eval "$TMP"`
+    if [ -z $VAR_VALUE ]; then
+        echo "$1 must be defined for this template"
+        exit 1
+    else
+        echo "$1 is $VAR_VALUE"
+    fi
+
+}
+
 install_java(){
     run_gsui_function_script install_java
 }
