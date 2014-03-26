@@ -22,6 +22,18 @@ check_exists(){
 
 }
 
+
+# use this with SYSCONFIG_FILE=filename read_sysconfig. This function will add /etc/sysconfig to the path
+read_sysconfig(){
+    if [ ! -f /etc/sysconfig/$SYSCONFIG_FILE ]; then
+        echo "sysconfig file does not exists"
+        exit 1
+    else
+        chmod +x /etc/sysconfig/$SYSCONFIG_FILE
+        source /etc/sysconfig/$SYSCONFIG_FILE
+    fi
+}
+
 install_java(){
     run_gsui_function_script install_java
 }
