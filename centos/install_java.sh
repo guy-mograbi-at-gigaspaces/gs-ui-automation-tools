@@ -2,7 +2,7 @@ echo "installing java"
 # find wget urls at : https://ivan-site.com/2012/05/download-oracle-java-jre-jdk-using-a-script/
 
 DIST_FOLDER=/usr/lib/jvm/jdk1.6.0_45
-if [ -f $DIST_FOLDER ];then
+if [ -e $DIST_FOLDER ];then
     echo "java already installed. skipping"
 else
     CURRENT_DIRECTORY=`pwd`

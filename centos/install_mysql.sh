@@ -7,25 +7,27 @@ else
 
     cd "$(dirname "$0")"
 
-    if [ -z $DB_ADMIN ] || [ -z DB_ADMIN_PASSWORD ]; then
+    check_exists DB_ADMIN
+    check_exists DB_ADMIN_PASSWORD
 
-        echo "cannot install mysql, please define DB_ADMIN and DB_ADMIN_PASSWORD
-
-    fi
 
     echo "installing mysql"
     yum -y install mysql-server mysql php-mysql
     chkconfig --levels 235 mysqld on
     service mysqld start
-    mysql -u $DB_ADMIN -e "SET PASSWORD FOR '$DB_ADMIN'@'localhost' = PASSWORD('$DB_ADMIN_PASSWORD');"
-    mysql -u $DB_ADMIN -p$DB_ADMIN_PASSWORD -e "SET PASSWORD FOR '$DB_ADMIN'@'127.0.0.1' = PASSWORD('$DB_ADMIN_PASSWORD');"
-    mysql -u $DB_ADMIN -e "SET PASSWORD FOR '$DB_ADMIN'@'127.0.0.1' = PASSWORD('$DB_ADMIN_PASSWORD');"
-    mysql -u $DB_ADMIN -p$DB_ADMIN_PASSWORD -e "SET PASSWORD FOR '$DB_ADMIN'@'localhost.localdomain' = PASSWORD('$DB_ADMIN_PASSWORD');"
-    mysql -u $DB_ADMIN -e "SET PASSWORD FOR '$DB_ADMIN'@'localhost.localdomain' = PASSWORD('$DB_ADMIN_PASSWORD');"
-    mysql -u $DB_ADMIN -p$DB_ADMIN_PASSWORD -e "DROP USER ''@'localhost';"
-    mysql -u $DB_ADMIN -e "DROP USER ''@'localhost';"
-    mysql -u $DB_ADMIN -p$DB_ADMIN_PASSWORD  -e  "DROP USER ''@'localhost.localdomain';"
-    mysql -u $DB_ADMIN -e "DROP USER ''@'localhost.localdomain';"
+
+    echo "configuring DB_ADMIN on mysql. ignoring errors by adding || true for each line"
+
+    mysql -u $DB_ADMIN -e "SET PASSWORD FOR '$DB_ADMIN'@'localhost' = PASSWORD('$DB_ADMIN_PASSWORD');" || true
+    mysql -u $DB_ADMIN -p$DB_ADMIN_PASSWORD -e "SET PASSWORD FOR '$DB_ADMIN'@'127.0.0.1' = PASSWORD('$DB_ADMIN_PASSWORD');" || true
+    mysql -u $DB_ADMIN -e "SET PASSWORD FOR '$DB_ADMIN'@'127.0.0.1' = PASSWORD('$DB_ADMIN_PASSWORD');" || true
+    mysql -u $DB_ADMIN -p$DB_ADMIN_PASSWORD -e "SET PASSWORD FOR '$DB_ADMIN'@'localhost.localdomain' = PASSWORD('$DB_ADMIN_PASSWORD');" || true
+    mysql -u $DB_ADMIN -e "SET PASSWORD FOR '$DB_ADMIN'@'localhost.localdomain' = PASSWORD('$DB_ADMIN_PASSWORD');" || true
+    mysql -u $DB_ADMIN -p$DB_ADMIN_PASSWORD -e "DROP USER ''@'localhost';" || true
+    mysql -u $DB_ADMIN -e "DROP USER ''@'localhost';" || true
+    mysql -u $DB_ADMIN -p$DB_ADMIN_PASSWORD  -e  "DROP USER ''@'localhost.localdomain';" || true
+    mysql -u $DB_ADMIN -e "DROP USER ''@'localhost.localdomain';" || true
+
 
 
     cd $CURRENT_DIRECTORY
