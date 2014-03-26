@@ -41,7 +41,7 @@ install_initd_script(){
     INITD_LOCATION=/etc/init.d/$SERVICE_NAME
 
     dos2unix $SERVICE_FILE
-    cp -f $SERVICE_FILE $INITD_LOCATION
+    source $SERVICE_FILE > $INITD_LOCATION
     chmod +x $INITD_LOCATION
     echo "initd script installed"
 
