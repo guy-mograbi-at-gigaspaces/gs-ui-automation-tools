@@ -16,3 +16,7 @@ install_java(){
 install_mysql(){
     run_gsui_function_script install_mysql
 }
+
+install_nginx(){
+    run_gsui_function_script install_nginx
+}
