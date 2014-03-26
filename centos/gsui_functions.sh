@@ -49,6 +49,15 @@ install_java(){
     NAME=install_java run_gsui_function_script
 }
 
+run_wget(){
+    wget --no-cache --no-check-certificate $*
+}
+
+install_node(){
+
+    NAME=install_node run_gsui_function_script
+}
+
 install_mysql(){
     NAME=install_mysql run_gsui_function_script
 }
