@@ -35,13 +35,17 @@ read_sysconfig(){
 
 # places a script under /etc/init.d. use with $SERVICE_NAME
 install_initd_script(){
+    echo "start install_initd_script"
     check_exists SERVICE_NAME
+    echo "before check_exists SERVICE_FILE"
     check_exists SERVICE_FILE
     echo "installing initd script"
     INITD_LOCATION=/etc/init.d/$SERVICE_NAME
-
+    echo "before dos2unix $SERVICE_FILE"
     dos2unix $SERVICE_FILE
+    echo "before source $SERVICE_FILE > $INITD_LOCATION"
     source $SERVICE_FILE > $INITD_LOCATION
+    echo "before chmod +x $INITD_LOCATION"
     chmod +x $INITD_LOCATION
     echo "initd script installed"
 
