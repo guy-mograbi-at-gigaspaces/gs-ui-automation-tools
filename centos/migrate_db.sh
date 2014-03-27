@@ -48,7 +48,7 @@ DB_VERSION=`mysql -u $DB_USER -p$DB_PASSWORD $DB -e "select version from patchle
 echo "current DB version is $DB_VERSION"
 if [ $DB_VERSION -ge $UPGRADE_TO ]; then
         echo "DB version is bigger. will not run migrate scripts"
-        exit 0
+
 else
         echo "upgrading to $UPGRADE_TO"
         DB_VERSION=` expr $DB_VERSION + 1 `
