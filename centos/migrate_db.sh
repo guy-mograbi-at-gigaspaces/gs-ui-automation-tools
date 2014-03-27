@@ -13,9 +13,8 @@ check_exists DB
 check_exists BASEDIR
 check_exists UPGRADE_TO
 
-echo "upgrading to [ $1 ]"
+echo "upgrading to [ $UPGRADE_TO ]"
 
-UPGRADE_TO=$1
 
 migrate_create(){
     DB_STATUS=`mysqlshow "$DB" -u $DB_ADMIN -p$DB_ADMIN_PASSWORD > /dev/null 2>&1 || echo "missing"`
@@ -75,7 +74,7 @@ fi
 }
 
 
-case "$1" in
+case "$UPGRADE_TO" in
   latest)
     upgrade_to_latest
     ;;
@@ -84,6 +83,7 @@ case "$1" in
     ;;
   version)
     migrate_get_version
+
     ;;
   *)
     upgrade_to_version
