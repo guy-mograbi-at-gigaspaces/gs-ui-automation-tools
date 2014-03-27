@@ -5,10 +5,12 @@ if [ -f /usr/bin/node ]; then
 else
     NAVE=/opt/nave/nave.sh
 
-    if [ ! -f nave.sh ]; then
+    if [ ! -f $NAVE ]; then
         echo "downloading nave"
         mkdir -p /opt/nave
-        run_wget -O $NAME https://raw.github.com/isaacs/nave/master/nave.sh
+        run_wget -O $NAVE https://raw.github.com/isaacs/nave/master/nave.sh
+        dos2unix $NAVE
+        chmod +x $NAVE
     fi
     chmod 755 $NAVE
     $NAVE install 0.10.18
