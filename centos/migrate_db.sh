@@ -11,6 +11,7 @@ check_exists DB_USER
 check_exists DB_PASSWORD
 check_exists DB
 check_exists BASEDIR
+check_exists UPGRADE_TO
 
 echo "upgrading to [ $1 ]"
 
@@ -33,14 +34,6 @@ migrate_get_version(){
     echo "current DB version is $DB_VERSION"
 }
 
-
-migrate_error(){
-    if [ "$UPGRADE_TO" = "" ];then
-        echo "ERROR : missing argument version"
-        echo "usage db_migrate version"
-        exit 1
-    fi
-}
 
 upgrade_to_latest(){
     echo "calculating latest version"
@@ -93,7 +86,6 @@ case "$1" in
     migrate_get_version
     ;;
   *)
-    migrate_error
     upgrade_to_version
 
 esac
