@@ -83,3 +83,8 @@ migrate_db(){
 install_git(){
     NAME=install_git run_gsui_function_script
 }
+
+install_site_on_nginx(){
+    cp $SITE_CONF /etc/nginx/sites-available
+    ln -s /etc/nginx/sites-available /etc/nginx/sites-enabled
+}

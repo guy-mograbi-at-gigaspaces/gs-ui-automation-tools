@@ -1,4 +1,4 @@
-if [ -e /etc/init.d/mongodb ]; then
+if [ -e /etc/init.d/mongod ]; then
     echo "mongo already installed... skipping"
 else
     cp -f /opt/gsat/mongo.repo /etc/yum.repos.d/mogno.repo

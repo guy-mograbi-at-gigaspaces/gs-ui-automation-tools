@@ -1,5 +1,5 @@
 # install gsat using the following command
-# eval "`wget --no-cache --no-check-certificate -O - http://get.gsdev.info/gsat/1.0.0/install_gsat.sh | dos2unix | bash`"
+# source "`wget --no-cache --no-check-certificate -O - http://get.gsdev.info/gsat/1.0.0/install_gsat.sh | dos2unix | bash`"
 # this will automatically download and run gsui_functions.sh
 
 

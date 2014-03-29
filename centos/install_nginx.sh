@@ -8,9 +8,19 @@ else
 
 
     echo "copying nginx configuration file"
-    if [ -f /etc/nginx/nginx_conf_backup]; then
+    if [ -z NGINX_CONF ]; then
+        echo "did not get an NGINX_CONF to override"
+    else
+
+    fi
+    if [ -e /etc/nginx/nginx_conf_backup]; then
         echo "I suspect nginx configuration already copied. Not copying again"
+    else
+        echo "overriding nginx configuration
         mv /etc/nginx/nginx.conf /etc/nginx/nginx_conf_backup
-        cp nginx.conf /etc/nginx/nginx.conf
+        cp /opt/gsat/nginx.conf /etc/nginx/nginx.conf
+        mkdir -p /etc/nginx/sites-enabled
+        mkdir -p /etc/nginx/sites-available
+        service nginx restart
     fi
 fi
