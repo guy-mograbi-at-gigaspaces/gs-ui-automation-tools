@@ -2,7 +2,7 @@ if [ -e /etc/init.d/nginx ]; then
     echo "nginx already installed. skipping"
 else
     echo "installing nginx"
-    cp -f nginx.repo /etc/yum.repos.d/nginx.repo
+    cp -f /opt/gsat/nginx.repo /etc/yum.repos.d/nginx.repo
     yum clean all
     yum -y install nginx
 
