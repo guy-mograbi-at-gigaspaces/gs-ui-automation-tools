@@ -79,3 +79,7 @@ install_nginx(){
 migrate_db(){
     NAME=migrate_db run_gsui_function_script $*
 }
+
+install_git(){
+    NAME=install_git run_gsui_function_script
+}

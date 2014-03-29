@@ -21,7 +21,14 @@ migrate_create(){
     if [ "$DB_STATUS" = "missing" ];then
         echo "creating DB"
         `mysql -u $DB_USER -p$DB_PASSWORD  -e "create database $DB"`
-        `mysql -u $DB_USER -p$DB_PASSWORD $DB  < $BASEDIR/create.sql`
+        if [ -e $BASEDIR/create.sql ]; then
+            echo "running create file from $BASEDIR/create.sql"
+
+            `mysql -u $DB_USER -p$DB_PASSWORD $DB  < $BASEDIR/create.sql`
+        else
+            echo "running default create statements."
+            `mysql -u $DB_USER -p$DB_PASSWORD $DB  < /opt/gsat/default_create.sql`
+
     else
         echo "DB already exists. skipping"
     fi
