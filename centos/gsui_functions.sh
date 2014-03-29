@@ -88,3 +88,11 @@ install_site_on_nginx(){
     cp $SITE_CONF /etc/nginx/sites-available
     ln -s /etc/nginx/sites-available /etc/nginx/sites-enabled
 }
+
+install_ruby(){
+    NAME=install_ruby run_gsui_function_script $*
+}
+
+install_compass(){
+    NAME=install_compass run_gsui_function_script
+}
