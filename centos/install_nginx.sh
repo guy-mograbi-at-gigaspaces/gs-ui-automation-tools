@@ -12,7 +12,7 @@ else
     if [ -e /etc/nginx/nginx_conf_backup]; then
         echo "I suspect nginx configuration already copied. Not copying again"
     else
-        echo "overriding nginx configuration
+        echo "overriding nginx configuration"
         mv /etc/nginx/nginx.conf /etc/nginx/nginx_conf_backup
         cp /opt/gsat/nginx.conf /etc/nginx/nginx.conf
         mkdir -p /etc/nginx/sites-enabled
