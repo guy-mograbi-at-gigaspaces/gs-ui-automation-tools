@@ -8,11 +8,7 @@ else
 
 
     echo "copying nginx configuration file"
-    if [ -z NGINX_CONF ]; then
-        echo "did not get an NGINX_CONF to override"
-    else
 
-    fi
     if [ -e /etc/nginx/nginx_conf_backup]; then
         echo "I suspect nginx configuration already copied. Not copying again"
     else
