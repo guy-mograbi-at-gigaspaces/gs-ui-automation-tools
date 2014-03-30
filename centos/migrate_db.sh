@@ -54,6 +54,13 @@ upgrade_to_latest(){
 upgrade_to_version(){
 DB_VERSION=`mysql -u $DB_USER -p$DB_PASSWORD $DB -e "select version from patchlevel" --skip-column-names --raw `
 echo "current DB version is $DB_VERSION"
+
+
+if [ -z DB_VERSION ] || [ "$DB_VERSION" = "" ]; then
+    echo "failed to extract db version"
+    exit 1
+fi
+
 if [ $DB_VERSION -ge $UPGRADE_TO ]; then
         echo "DB version is bigger. will not run migrate scripts"
 
