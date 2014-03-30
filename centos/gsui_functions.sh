@@ -44,7 +44,14 @@ install_initd_script(){
     echo "before dos2unix $SERVICE_FILE"
     dos2unix $SERVICE_FILE
     echo "before source $SERVICE_FILE > $INITD_LOCATION"
-    source $SERVICE_FILE > $INITD_LOCATION
+
+
+    if [ ! -h $INITD_LOCATION ];then
+        echo "file [$INITD_LOCATION] exists but not a link. removing it."
+        rm -f $INITD_LOCATION
+    fi
+
+    ln -Tfs $SERVICE_FILE $INITD_LOCATION
     echo "before chmod +x $INITD_LOCATION"
     chmod +x $INITD_LOCATION
     echo "initd script installed"
