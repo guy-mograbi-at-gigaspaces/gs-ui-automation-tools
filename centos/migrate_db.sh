@@ -28,6 +28,7 @@ migrate_create(){
         else
             echo "running default create statements."
             `mysql -u $DB_USER -p$DB_PASSWORD $DB  < /opt/gsat/default_create.sql`
+        fi
 
     else
         echo "DB already exists. skipping"
