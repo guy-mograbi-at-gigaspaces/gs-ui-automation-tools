@@ -9,7 +9,7 @@ rm -f /tmp/cloudify.zip
 echo "getting current install url version"
 
 mkdir -p /etc/gsat
-CLOUDIFY_CURRENT_URL=`cat /etc/gsat/cloudify_url_version`
+CLOUDIFY_CURRENT_URL=`cat /etc/gsat/cloudify_url_version || true`
 
 echo "comparing [$CLOUDIFY_URL] to [$CLOUDIFY_CURRENT_URL]"
 if [ "$CLOUDIFY_URL" = "$CLOUDIFY_CURRENT_URL" ]; then
