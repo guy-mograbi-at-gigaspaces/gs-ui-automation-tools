@@ -58,6 +58,10 @@ install_initd_script(){
 
 }
 
+install_cloudify(){
+    NAME=install_cloudify run_gsui_function_script
+}
+
 install_mongo(){
     NAME=install_mongo run_gsui_function_script
 }
