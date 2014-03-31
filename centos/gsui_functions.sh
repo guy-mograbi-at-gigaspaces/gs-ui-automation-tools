@@ -37,7 +37,6 @@ read_sysconfig(){
 install_initd_script(){
     echo "start install_initd_script"
     check_exists SERVICE_NAME
-    echo "before check_exists SERVICE_FILE"
     check_exists SERVICE_FILE
     echo "installing initd script"
     INITD_LOCATION=/etc/init.d/$SERVICE_NAME

@@ -4,4 +4,5 @@ else
     \cp -f /opt/gsat/mongo.repo /etc/yum.repos.d/mogno.repo
     yum clean all
     yum -y install mongo-10gen mongo-10gen-server
+    service mongod start
 fi
