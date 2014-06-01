@@ -9,6 +9,7 @@ echo "workdir is now `pwd`"
 
 check_exists DB_USER
 check_exists DB_PASSWORD
+check_exists DB_HOST
 check_exists DB
 check_exists BASEDIR
 check_exists UPGRADE_TO
@@ -17,17 +18,17 @@ echo "upgrading to [ $UPGRADE_TO ]"
 
 
 migrate_create(){
-    DB_STATUS=`mysqlshow "$DB" -u $DB_ADMIN -p$DB_ADMIN_PASSWORD > /dev/null 2>&1 || echo "missing"`
+    DB_STATUS=`mysqlshow "$DB" -h $DB_HOST -u $DB_ADMIN -p$DB_ADMIN_PASSWORD > /dev/null 2>&1 || echo "missing"`
     if [ "$DB_STATUS" = "missing" ];then
         echo "creating DB"
-        `mysql -u $DB_USER -p$DB_PASSWORD  -e "create database $DB"`
+        `mysql -u $DB_USER -p$DB_PASSWORD  -h $DB_HOST -e "create database $DB"`
         if [ -e $BASEDIR/create.sql ]; then
             echo "running create file from $BASEDIR/create.sql"
 
             `mysql -u $DB_USER -p$DB_PASSWORD $DB  < $BASEDIR/create.sql`
         else
             echo "running default create statements."
-            `mysql -u $DB_USER -p$DB_PASSWORD $DB  < /opt/gsat/default_create.sql`
+            `mysql -u $DB_USER -p$DB_PASSWORD -h $DB_HOST $DB  < /opt/gsat/default_create.sql`
         fi
 
     else
@@ -37,7 +38,7 @@ migrate_create(){
 }
 
 migrate_get_version(){
-    DB_VERSION=`mysql -u $DB_USER -p$DB_PASSWORD $DB -e "select version from patchlevel" --skip-column-names --raw `
+    DB_VERSION=`mysql -u $DB_USER -p$DB_PASSWORD -h $DB_HOST $DB -e "select version from patchlevel" --skip-column-names --raw `
     echo "current DB version is $DB_VERSION"
 }
 
@@ -52,7 +53,7 @@ upgrade_to_latest(){
 
 
 upgrade_to_version(){
-DB_VERSION=`mysql -u $DB_USER -p$DB_PASSWORD $DB -e "select version from patchlevel" --skip-column-names --raw `
+DB_VERSION=`mysql -u $DB_USER -p$DB_PASSWORD -h $DB_HOST $DB -e "select version from patchlevel" --skip-column-names --raw `
 echo "current DB version is $DB_VERSION"
 
 
@@ -72,13 +73,13 @@ else
                 CURR_FILE="$BASEDIR/$i.sql"
                 if [ -f $CURR_FILE ]; then
                         echo "          migrating $CURR_FILE"
-                        `mysql -u $DB_USER -p$DB_PASSWORD $DB  < $CURR_FILE`
+                        `mysql -u $DB_USER -p$DB_PASSWORD -h $DB_HOST  $DB  < $CURR_FILE`
                         RETVAL=$?
                         if [ "$RETVAL" -gt "0" ]; then
                                 echo "failed migrating $i with error $RETVAL"
                                 exit 1
                         else
-                                `mysql -u $DB_USER -p$DB_PASSWORD $DB -e "update patchlevel set version=$i"`
+                                `mysql -u $DB_USER -p$DB_PASSWORD -h $DB_HOST $DB -e "update patchlevel set version=$i"`
                         fi
                 else
                         echo "missing file $CURR_FILE"
